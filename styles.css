@@ -115,7 +115,12 @@ h3::after {
   margin-left: 220px;
   margin-top: -15px;
 }
-
+.stamp {
+  width: 180px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
 @media (max-width: 800px) {
   img {
     width: 80%;
@@ -149,6 +154,9 @@ h3::after {
     cursor: pointer;
     align-items: center;
   }
+  .stamp {
+    width: 100px;
+  }
 }
 
 @media (max-width: 768px) and (min-width: 451px) {
@@ -175,5 +183,8 @@ h3::after {
     display: flex;
     cursor: pointer;
     align-items: center;
+  }
+  .stamp {
+    width: 150px;
   }
 }
