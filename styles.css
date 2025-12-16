@@ -12,10 +12,12 @@ a {
 }
 main {
   position: relative;
+  overflow: hidden;
   width: 100vw;
   min-height: 100vh;
   background-color: #f7f1db;
   padding-top: 20px;
+  padding-bottom: 100px;
 }
 .container {
   width: 100%;
@@ -145,6 +147,10 @@ h3::after {
 
   .contact-container span a {
     font-size: 18px;
+  }
+  .stamp {
+    bottom: 1px;
+    right: 10px;
   }
 
   .social-btns {
