@@ -58,7 +58,8 @@ const translations = {
         // Collaboration Section
         "collab.heading": "COLLABORATION",
         "collab.title": "COLLABORATE WITH US",
-        "collab.content": "Fritzguard is more than a restaurant, it's a modern Belgian 🇧🇪 culinary concept built around signature frites and iconic classics. If you have collaboration ideas or proposals, feel free to contact us at: <br> +32 2 331 00 29<br />or<br /> beloria.contact@gmail.com",
+        "collab.intro": "Fritzguard is more than a restaurant, it's a modern Belgian 🇧🇪 culinary concept built around signature frites and iconic classics. If you have collaboration ideas or proposals, feel free to contact us at:",
+        "collab.or": "or",
 
         // Locations Section
         "locations.heading": "locations",
@@ -134,7 +135,8 @@ const translations = {
         // Collaboration Section
         "collab.heading": "SAMENWERKING",
         "collab.title": "WERK MET ONS SAMEN",
-        "collab.content": "Fritzguard is meer dan een restaurant, het is een modern Belgisch 🇧🇪 culinair concept gebouwd rond signatuur frietjes en iconische klassieken. Als je samenwerkingsideeën of voorstellen hebt, neem dan gerust contact met ons op: <br> +32 2 331 00 29<br />of<br /> beloria.contact@gmail.com",
+        "collab.intro": "Fritzguard is meer dan een restaurant, het is een modern Belgisch 🇧🇪 culinair concept gebouwd rond signatuur frietjes en iconische klassieken. Als je samenwerkingsideeën of voorstellen hebt, neem dan gerust contact met ons op:",
+        "collab.or": "of",
 
         // Locations Section
         "locations.heading": "locaties",
@@ -209,7 +211,8 @@ const translations = {
         // Collaboration Section
         "collab.heading": "COLLABORATION",
         "collab.title": "COLLABOREZ AVEC NOUS",
-        "collab.content": "Fritzguard est plus qu'un restaurant, c'est un concept culinaire belge 🇧🇪 moderne construit autour de frites signature et de grands classiques. Si vous avez des idées de collaboration ou des propositions, n'hésitez pas à nous contacter: <br> +32 2 331 00 29<br />ou<br /> beloria.contact@gmail.com",
+        "collab.intro": "Fritzguard est plus qu'un restaurant, c'est un concept culinaire belge 🇧🇪 moderne construit autour de frites signature et de grands classiques. Si vous avez des idées de collaboration ou des propositions, n'hésitez pas à nous contacter:",
+        "collab.or": "ou",
 
         // Locations Section
         "locations.heading": "localités",
