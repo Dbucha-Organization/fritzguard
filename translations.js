@@ -482,21 +482,21 @@ function updateActiveLangButton() {
 function updateGoogleMapsLinks() {
     const currentLang = window.i18n.getLanguage();
     const languageMap = {
-        'en': 'en-BE',
-        'nl': 'nl-BE',
-        'fr': 'fr-BE'
+        'en': 'en',
+        'nl': 'nl',
+        'fr': 'fr'
     };
 
-    const hlParam = languageMap[currentLang] || 'en-BE';
+    const hlParam = languageMap[currentLang] || 'en';
     const mapsLinks = document.querySelectorAll('[data-google-maps-reserve]');
 
     mapsLinks.forEach((link) => {
         const href = link.getAttribute('href');
         // Replace or add the hl parameter
         const urlObj = new URL(href);
-        urlObj.searchParams.set('hl', hlParam);
+        urlObj.searchParams.set('lang', hlParam);
         link.setAttribute('href', urlObj.toString());
-        console.log('✓ Updated Google Maps link hl parameter to:', hlParam);
+        console.log('✓ Updated Google Maps link lang parameter to:', hlParam);
     });
 }
 
