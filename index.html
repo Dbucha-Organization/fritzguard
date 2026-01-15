@@ -31,6 +31,16 @@
         (n.className += t + "touch");
     })(window, document);
   </script>
+  <script>
+    ; (function (d, s, id) {
+      const el = d.getElementsByTagName(s)[0]
+      if (d.getElementById(id) || el.parentNode == null) return
+      var js = d.createElement(s)
+      js.id = id
+      js.src = 'https://sdk.zenchef.com/v1/sdk.min.js'
+      el.parentNode.insertBefore(js, el)
+    })(document, 'script', 'zenchef-sdk')
+  </script>
   <style>
     /* ---
     ---------------------- Lenis Scroll Fix -------------------------------------------------- */
@@ -146,16 +156,16 @@
   <!-- Google Tag Manager -->
 
   <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != "dataLayer" ? "&l=" + l : "";
-      j.async = true;
-      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, "script", "dataLayer", "GTM-P2S2Q8P");
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-P2S2Q8P");
   </script>
 
   <!-- End Google Tag Manager -->
@@ -377,9 +387,9 @@
               <div class="hide-mobile-landscape">
                 <a data-text-fade-reveal="" data-wf--button-dark--variant="bg-black"
                   data-w-id="13f2cc50-503e-cab7-033a-e2d3162aed40" target="_blank"
-                  href="https://reservations.tablebooker.com/?restaurantId=20128257"
+                  href="https://bookings.zenchef.com/results?rid=381641&pid=1001&lang=de"
                   class="button-dark_wrapper w-variant-cdc199fa-c6fa-81a9-9d6a-faca36e56f68 w-inline-block"
-                  data-google-maps-reserve>
+                  data-booking-link="true">
                   <div class="button_text-wrapper">
                     <div data-i18n="nav.order" class="button_text w-variant-cdc199fa-c6fa-81a9-9d6a-faca36e56f68">
                       Order A Table
@@ -424,9 +434,9 @@
             </a>
             <a data-text-fade-reveal="" style="display: none;" data-wf--button-dark--variant="bg-black"
               data-w-id="13f2cc50-503e-cab7-033a-e2d3162aed40" target="_blank"
-              href="https://reservations.tablebooker.com/?restaurantId=20128257"
+              href="https://bookings.zenchef.com/results?rid=381641&pid=1001&lang=de"
               class="button-dark_wrapper w-variant-cdc199fa-c6fa-81a9-9d6a-faca36e56f68 w-inline-block"
-              data-google-maps-reserve>
+              data-booking-link="true">
               <div class="button_text-wrapper">
                 <div class="button_text w-variant-cdc199fa-c6fa-81a9-9d6a-faca36e56f68" style="text-align: center;">
                   Order A Table
@@ -802,6 +812,7 @@
             </div>
           </div>
         </section>
+        <div class="zc-widget-config" data-lang="fr" data-primary-color="337034" data-restaurant="381641" data-open="2000"></div>
         <section id="location" data-theme-section="light" data-wf--cta-locations_section--variant="base"
           class="section_cta-locations">
           <div class="padding-global padding-section-medium">
@@ -955,8 +966,8 @@
                     </div>
                   </a>
                   <a data-faded-link="" target="_blank"
-                    href="https://reservations.tablebooker.com/?restaurantId=20128257"
-                    class="button-link_wrapper w-inline-block" data-google-maps-reserve>
+                    href="https://bookings.zenchef.com/results?rid=381641&pid=1001&lang=de"
+                    class="button-link_wrapper w-inline-block" data-booking-link="true">
                     <div class="button_text-wrapper">
                       <div class="button_text">Order a table</div>
                     </div>
@@ -1998,6 +2009,64 @@
           sampleCount++;
         }
       });
+    });
+  </script>
+
+  <!-- Language Detection & Widget Update Script -->
+  <script>
+    // Listen for language changes and update widgets
+    window.addEventListener('load', function () {
+      function updateLanguageInWidgets() {
+        const currentLang = window.i18n?.getLanguage?.() || 'en';
+
+        // Map our language codes to widget-compatible codes
+        const langMap = {
+          'en': 'en',
+          'fr': 'fr',
+          'nl': 'nl'
+        };
+
+        const widgetLang = langMap[currentLang] || 'en';
+
+        // Update zc-widget-config
+        const zcWidget = document.querySelector('[data-lang][data-restaurant]');
+        if (zcWidget) {
+          zcWidget.setAttribute('data-lang', widgetLang);
+          console.log('✓ Updated zc-widget language to:', widgetLang);
+        }
+
+        // Update booking links with language parameter
+        const bookingLinkLangMap = {
+          'en': 'en',
+          'fr': 'fr',
+          'nl': 'nl'
+        };
+
+        const bookingLang = bookingLinkLangMap[currentLang] || 'en';
+        const bookingLinks = document.querySelectorAll('[data-booking-link="true"]');
+
+        bookingLinks.forEach((link) => {
+          const baseUrl = 'https://bookings.zenchef.com/results?rid=381641&pid=1001';
+          link.setAttribute('href', `${baseUrl}&lang=${bookingLang}`);
+          console.log('✓ Updated booking link language to:', bookingLang);
+        });
+
+        // Reload Zengo widget if it exists to apply language changes
+        if (window.zengo) {
+          try {
+            window.zengo.reload?.();
+            console.log('✓ Reloaded Zengo widget');
+          } catch (e) {
+            console.log('Zengo widget not available for reload');
+          }
+        }
+      }
+
+      // Update on initial load
+      updateLanguageInWidgets();
+
+      // Update whenever language changes
+      window.addEventListener('languageChanged', updateLanguageInWidgets);
     });
   </script>
 </body>

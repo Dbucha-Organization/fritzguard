@@ -342,24 +342,87 @@ class TranslationManager {
     }
 
     /**
+     * Detect language from multiple sources
+     * Priority: Weglot API > localStorage > browser language > URL parameter > default
+     * @returns {string} Detected language code
+     */
+    detectLanguage() {
+        // 1. Check if Weglot is loaded and get current language
+        if (typeof Weglot !== 'undefined' && Weglot.getCurrentLanguage) {
+            try {
+                const weglotLang = Weglot.getCurrentLanguage();
+                console.log('✓ Language detected from Weglot API:', weglotLang);
+                return weglotLang;
+            } catch (e) {
+                console.log('Weglot not fully ready yet');
+            }
+        }
+
+        // 2. Check localStorage for previously saved language
+        const savedLanguage = localStorage.getItem('fritzguard_language');
+        if (savedLanguage && this.translations[savedLanguage]) {
+            console.log('✓ Language detected from localStorage:', savedLanguage);
+            return savedLanguage;
+        }
+
+        // 3. Check URL parameters (e.g., ?lang=fr)
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLang = urlParams.get('lang');
+        if (urlLang && this.translations[urlLang]) {
+            console.log('✓ Language detected from URL parameter:', urlLang);
+            return urlLang;
+        }
+
+        // 4. Check browser language
+        const browserLang = this.detectBrowserLanguage();
+        if (browserLang) {
+            console.log('✓ Language detected from browser settings:', browserLang);
+            return browserLang;
+        }
+
+        // 5. Default to English
+        console.log('Using default language: en');
+        return 'en';
+    }
+
+    /**
+     * Detect browser language and map to supported languages
+     * @returns {string|null} Detected language code or null
+     */
+    detectBrowserLanguage() {
+        // Get browser language(s)
+        const browserLangs = (navigator.languages || [navigator.language || navigator.userLanguage])
+            .map(lang => lang.split('-')[0].toLowerCase());
+
+        // Supported languages
+        const supportedLangs = this.getAvailableLanguages();
+
+        // Try to find a match
+        for (let lang of browserLangs) {
+            if (supportedLangs.includes(lang)) {
+                return lang;
+            }
+        }
+
+        // No match found
+        return null;
+    }
+
+    /**
      * Initialize translation manager from localStorage or browser language
      */
     initialize() {
-        // Check localStorage for saved language
-        const savedLanguage = localStorage.getItem('fritzguard_language');
+        // Detect language from multiple sources
+        const detectedLanguage = this.detectLanguage();
 
-        if (savedLanguage && this.translations[savedLanguage]) {
-            this.currentLanguage = savedLanguage;
-            console.log('Translation: Loaded saved language from localStorage:', savedLanguage);
+        // Set the detected language
+        if (this.translations[detectedLanguage]) {
+            this.currentLanguage = detectedLanguage;
+            localStorage.setItem('fritzguard_language', detectedLanguage);
+            console.log('Translation: Language initialized to:', detectedLanguage);
         } else {
-            // Try to use browser language
-            const browserLang = navigator.language.substring(0, 2);
-            if (this.translations[browserLang]) {
-                this.currentLanguage = browserLang;
-                console.log('Translation: Detected browser language:', browserLang);
-            } else {
-                console.log('Translation: Browser language not supported, using default: en');
-            }
+            console.log('Translation: Falling back to default language: en');
+            this.currentLanguage = 'en';
         }
 
         // Update page translations
