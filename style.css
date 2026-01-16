@@ -3917,7 +3917,6 @@ figcaption {
     z-index: 60;
     background-color: var(--color--neutral-100);
     flex-flow: column;
-    justify-content: space-between;
     align-items: stretch;
     min-width: 50%;
     height: 100svh;
